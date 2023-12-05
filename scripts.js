@@ -1,5 +1,5 @@
 window.onload = function () {
-    createTaskEntry();
+    createTaskEntryTheFirstTime();
 }
 
 window.onkeyup = function (event) {
@@ -19,18 +19,23 @@ function findTaskEntry() {
     return document.getElementById('taskEntry');
 }
 
+function createTaskEntryTheFirstTime() {
+    let input = createTaskEntry();
+    input.setAttribute('placeholder', 'What one thing do you need to do?');
+}
+
 function createTaskEntry() {
     let input = document.createElement('input');
     input.setAttribute('id', 'taskEntry');
     input.setAttribute('type', 'text');
     input.setAttribute('class', 'w-100 p-2 border-0 text-center');
-    input.setAttribute('placeholder', 'What one thing do you need to do?');
     input.onblur = function (event) {
         findTaskEntry().focus();
     };
 
     document.getElementById('dontainer').appendChild(input);
     input.focus();
+    return input;
 }
 
 function removeTaskEntry() {
