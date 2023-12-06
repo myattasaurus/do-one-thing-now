@@ -6,11 +6,11 @@ window.onkeyup = function (event) {
     if (event.code === 'Enter') {
         let task = findTask();
         if (task) {
-            createTaskEntry();
-            removeTask();
+            crossOutTask();
+            removeTaskAndCreateTaskEntry();
         } else {
-            createTask();
-            removeTaskEntry();
+            let taskEntryValue = removeTaskEntry();
+            createTask(taskEntryValue);
         }
     }
 };
@@ -40,27 +40,33 @@ function createTaskEntry() {
 
 function removeTaskEntry() {
     let taskEntry = findTaskEntry();
+    let taskEntryValue = taskEntry.value;
     taskEntry.onblur = null;
     taskEntry.remove();
+    return taskEntryValue;
 }
 
 function findTask() {
     return document.getElementById('task');
 }
 
-function createTask() {
-    let taskEntry = findTaskEntry();
-
+function createTask(taskEntryValue) {
     let para = document.createElement('p');
     para.setAttribute('id', 'task');
-    para.appendChild(text(taskEntry.value));
+    para.appendChild(text(taskEntryValue));
 
     document.getElementById('dontainer').appendChild(para);
 }
 
-function removeTask() {
-    let task = findTask();
-    task.remove();
+function crossOutTask() {
+    findTask().style.textDecorationLine = 'line-through';
+}
+
+function removeTaskAndCreateTaskEntry() {
+    setTimeout(() => {
+        findTask().remove();
+        createTaskEntry();
+    }, 400);
 }
 
 function text(str) {
