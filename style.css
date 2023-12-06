@@ -1,3 +1,35 @@
+:root {
+    --default-font-size: xx-large;
+    --defalut-font-family: 'Courier New', Courier, monospace;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    font-size: var(--default-font-size);
+    font-family: var(--defalut-font-family);
+}
+
 input:focus {
     outline: none;
+}
+
+input[type="text"] {
+    font-size: var(--default-font-size);
+    font-family: var(--defalut-font-family);
+    width: 90%;
+    border: none;
+    outline: none;
+    text-align: center;
 }
