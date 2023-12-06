@@ -6,14 +6,18 @@ window.onkeyup = function (event) {
     if (event.code === 'Enter') {
         let task = findTask();
         if (task) {
-            crossOutTask();
-            removeTaskAndCreateTaskEntry();
+            completeTask();
         } else {
             let taskEntryValue = removeTaskEntry();
             createTask(taskEntryValue);
         }
     }
 };
+
+function completeTask() {
+    crossOutTask();
+    removeTaskAndCreateTaskEntry();
+}
 
 function findTaskEntry() {
     return document.getElementById('taskEntry');
@@ -28,7 +32,6 @@ function createTaskEntry() {
     let input = document.createElement('input');
     input.setAttribute('id', 'taskEntry');
     input.setAttribute('type', 'text');
-    // input.setAttribute('class', 'w-100 p-2 border-0 text-center');
     input.onblur = function (event) {
         findTaskEntry().focus();
     };
@@ -54,6 +57,9 @@ function createTask(taskEntryValue) {
     let para = document.createElement('p');
     para.setAttribute('id', 'task');
     para.appendChild(document.createTextNode(taskEntryValue));
+    para.onclick = function (event) {
+        completeTask();
+    };
 
     document.getElementById('dontainer').appendChild(para);
 }
