@@ -1,10 +1,12 @@
 function crossOut(element, onComplete) {
-    element.onclick = () => {
-        element.style.textDecorationLine = 'line-through';
-        setTimeout(() => {
-            onComplete();
-            element.style.textDecorationLine = '';
-        }, 400);
+    if (element) {
+        element.onclick = () => {
+            element.style.textDecorationLine = 'line-through';
+            setTimeout(() => {
+                onComplete();
+                element.style.textDecorationLine = '';
+            }, 400);
+        }
     }
 }
 
@@ -73,7 +75,6 @@ class List {
 
         this.newItemElement = document.createElement('input');
         this.newItemElement.type = 'text';
-        this.newItemElement.onblur = () => this.newItemElement.focus();
         let li = document.createElement('li');
         li.append(this.newItemElement);
         this.element.append(li);
@@ -92,10 +93,12 @@ class List {
 
     show(parent) {
         parent.append(this.element);
+        this.newItemElement.onblur = () => this.newItemElement.focus();
         this.newItemElement.focus();
     }
 
     hide() {
+        this.newItemElement.onblur = null;
         this.element.remove();
     }
 }
@@ -164,7 +167,7 @@ class TaskPage {
 
     onkeyup(event) {
         if (event.code === 'Enter') {
-            this.createTask();
+            this.singleTask.element.click();
         }
     }
 
@@ -175,6 +178,7 @@ class TaskPage {
             this.repository.saveList(this.list);
             li = this.createRandomTask();
         });
+        this.singleTask.element.focus();
     }
 
     createRandomTask() {
@@ -232,6 +236,6 @@ class ListPage {
     }
 }
 
-function onLoad() {
+window.onload = () => {
     new ListPage(document.getElementById('dontainer'), new BackButton(), new List(), new Repository()).load();
 }
